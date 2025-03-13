@@ -5,14 +5,16 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+
+	"gitea.federated.computer/ross/federated-dash.git/internal/manager"
 )
 
 type application struct {
-	logger *slog.Logger
+	logger        *slog.Logger
 	templateCache map[string]*template.Template
-	tier string
-	domain string
-	appLinks []AppLink
+	tier          string
+	domain        string
+	appLinks      []AppLink
 }
 
 func main() {
@@ -30,6 +32,13 @@ func main() {
 		logger.Error("Must specify domain name.")
 		os.Exit(1)
 	}
+
+	manager.InstallationDirectory = os.Getenv("INSTALLATION_DIRECTORY")
+	if manager.InstallationDirectory == "" {
+		logger.Error("Must specify INSTALLATION_DIRECTORY.")
+		os.Exit(1)
+	}
+
 	//Set up template cache
 	templateCache, err := newTemplateCache()
 	if err != nil {
@@ -39,12 +48,12 @@ func main() {
 	//Set up app links cache
 	appLinks := getAppLinks(tier, domain)
 	//Set up application data
-	app := application {
-		logger: logger,
+	app := application{
+		logger:        logger,
 		templateCache: templateCache,
-		tier: tier,
-		domain: domain,
-		appLinks: appLinks,
+		tier:          tier,
+		domain:        domain,
+		appLinks:      appLinks,
 	}
 	//start server
 	err = http.ListenAndServe(":8080", app.routes())

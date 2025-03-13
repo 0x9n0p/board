@@ -1,31 +1,33 @@
 {{define "title"}}Home{{end}}
 
 {{define "main"}}
-    <section class="app-links">
-        <h2 class="app-links-title">Apps for {{.BaseUri}} on the {{.Tier}} plan:</h2>
-        <div class="app-links-container">
-            <!-- LOOP HERE -->
-            {{range .AppLinks}}
-                <a href="{{.Url}}" class="app-link-card-link" target="_blank">
-                    <div class="app-link-card">
-                        <img src="{{.Image}}" alt="" class="app-link-card__image">
-                        <h3 class="app-link-card__title">{{.Title}}</h3>
-                        <p class="app-link-card__description">{{.Description}}</p>
-                        {{with .DocumentationUrl}}
-                            <p><a href="{{.}}" class="documentation-link" target="_blank">Documentation</a></p>
-                        {{end}}
-                        {{if .LDAP}}
-                            <p class="app-link-card__ldap-notice">*Users Managed Via <a href="https://panel.{{$.BaseUri}}">Panel</a></p>
-                        {{else}}
-                            <p class="app-link-card__ldap-notice">*Users Not Managed Via Panel</p>
-                        {{end}}
-                        {{with .SpecialNote}}
-                            <p class="app-link-card__ldap-notice">*{{.}}</p>
-                        {{end}}
-                    </div>
-                </a>
-            {{end}}
-        </div>
-        <p class="app-links-attribution">All Logos are Property of Their Respective Project</p>
-    </section>
+<section class="app-links">
+    <h2 class="app-links-title">Apps for {{.BaseUri}} on the {{.Tier}} plan:</h2>
+    <div class="app-links-container">
+        <!-- LOOP HERE -->
+        {{range .AppLinks}}
+        <a href="{{.Url}}" class="app-link-card-link" target="_blank">
+            <div class="app-link-card">
+                <img src="{{.Image}}" alt="" class="app-link-card__image">
+                <h3 class="app-link-card__title">{{.Title}}</h3>
+                <p class="app-link-card__description">{{.Description}}</p>
+                {{with .DocumentationUrl}}
+                <p><a href="{{.}}" class="documentation-link" target="_blank">Documentation</a></p>
+                {{end}}
+                {{if .LDAP}}
+                <p class="app-link-card__ldap-notice">*Users Managed Via <a href="https://panel.{{$.BaseUri}}">Panel</a>
+                </p>
+                {{else}}
+                <p class="app-link-card__ldap-notice">*Users Not Managed Via Panel</p>
+                {{end}}
+                {{with .SpecialNote}}
+                <p class="app-link-card__ldap-notice">*{{.}}</p>
+                {{end}}
+                <a href="/apps/turnoff?title={{.Title}}">Turn it off</a>
+            </div>
+        </a>
+        {{end}}
+    </div>
+    <p class="app-links-attribution">All Logos are Property of Their Respective Project</p>
+</section>
 {{end}}

@@ -1,7 +1,12 @@
 package manager
 
-import "strings"
+import (
+	"path/filepath"
+	"strings"
+)
+
+var InstallationDirectory string
 
 func GetApplicationDirectory(title string) string {
-	return strings.ToLower(title)
+	return filepath.Clean(filepath.Join(InstallationDirectory, strings.ToLower(title)))
 }

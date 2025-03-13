@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+
+	manager_delivery "gitea.federated.computer/ross/federated-dash.git/internal/manager/delivery"
+)
 
 func (app *application) routes() *http.ServeMux {
 	mux := http.NewServeMux()
@@ -12,6 +16,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("GET /", app.notFound)
 	mux.HandleFunc("GET /vpn/{$}", app.vpn)
 	mux.HandleFunc("GET /apps/{$}", app.appList)
+	mux.HandleFunc("GET /apps/turnoff", manager_delivery.TurnOff)
 
 	return mux
 }
