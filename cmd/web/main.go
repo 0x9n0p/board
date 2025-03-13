@@ -45,8 +45,15 @@ func main() {
 		logger.Error(err.Error())
 		os.Exit(1)
 	}
+
 	//Set up app links cache
 	appLinks := getAppLinks(tier, domain)
+
+	if err := InstallApplications(appLinks); err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
+
 	//Set up application data
 	app := application{
 		logger:        logger,
