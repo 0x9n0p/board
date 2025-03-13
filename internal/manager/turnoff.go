@@ -13,9 +13,9 @@ const (
 )
 
 func TurnOff(directory string, service string) error {
-	path := filepath.Clean(filepath.Join(directory, ApplicationServiceFilename))
+	path := filepath.Clean(filepath.Join(directory, service))
 
-	variables, err := godotenv.Read()
+	variables, err := godotenv.Read(path)
 	if err != nil {
 		return fmt.Errorf("could not read environment variables (%s): %w", path, err)
 	}
