@@ -25,7 +25,7 @@ func TurnOff(directory string, service string) error {
 		status = Dashboard_StatusYes
 	}
 
-	if status != Dashboard_StatusYes {
+	if status == Dashboard_StatusNo {
 		// TODO: debug log
 		return nil
 	}
